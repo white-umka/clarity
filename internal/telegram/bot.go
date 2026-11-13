@@ -27,8 +27,13 @@ func StartUpdates(bot *tgbotapi.BotAPI) {
 
 	for update := range bot.GetUpdatesChan(u) {
 		if update.Message == nil { continue }
-
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "hello")
-		bot.Send(msg)
+		
+		switch update.Message.Text {
+			case "/start":
+				bot.Send(handleStart(bot, update.Message))
+			case "/uptime":
+				bot.Send(handleUptime(bot, update.Message))
+		}
 	}
 }
+
