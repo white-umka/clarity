@@ -33,6 +33,8 @@ func StartUpdates(bot *tgbotapi.BotAPI) {
 				bot.Send(handleStart(bot, update.Message))
 			case "/uptime":
 				bot.Send(handleUptime(bot, update.Message))
+			case "/freeram":
+				bot.Send(handlerFreeRam(bot, update.Message))
 		}
 	}
 }

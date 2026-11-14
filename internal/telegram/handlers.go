@@ -26,3 +26,15 @@ func handleUptime(bot *tgbotapi.BotAPI, msg *tgbotapi.Message) tgbotapi.MessageC
 	
 	return tgbotapi.NewMessage(msg.Chat.ID, text)
 }
+
+func handlerFreeRam(bot *tgbotapi.BotAPI, msg *tgbotapi.Message) tgbotapi.MessageConfig {
+	var info syscall.Sysinfo_t 
+	if err := syscall.Sysinfo(&info); err != nil {
+		panic(err)
+	}
+
+	text := fmt.Sprintf("доступная RAM: %d", info.Freeram)
+	
+	return tgbotapi.NewMessage(msg.Chat.ID, text)
+}
+
