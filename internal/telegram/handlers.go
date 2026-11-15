@@ -32,9 +32,18 @@ func handlerFreeRam(bot *tgbotapi.BotAPI, msg *tgbotapi.Message) tgbotapi.Messag
 	if err := syscall.Sysinfo(&info); err != nil {
 		panic(err)
 	}
+	
+	totalBytes := info.Totalram * uint64(info.Unit)
+	freeBytes := info.Freeram * uint64(info.Unit)
 
-	text := fmt.Sprintf("доступная RAM: %d", info.Freeram)
+	// делим на (1024 * 1024) чтобы перевести байты в мб
+	usedMB := float64(totalBytes - freeBytes) / (1024 * 1024) // использовано мб памяти
+	totalMb := float64(totalBytes) / (1024 * 1024) // всего мб памяти
+	
+	text := fmt.Sprintf("RAM: %.2f MB / %.2f MB", usedMB, totalMb)
 	
 	return tgbotapi.NewMessage(msg.Chat.ID, text)
 }
+
+
 
