@@ -10,4 +10,5 @@ CGO_ENABLED=0 GOOS=linux go build -o bot ./cmd/bot
 
 # запускаем через докер
 docker build -t clarity .
+docker rm -f clarity 2>/dev/null || true
 docker run -d --restart unless-stopped --name clarity --env-file .env clarity
