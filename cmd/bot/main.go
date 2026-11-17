@@ -8,4 +8,3 @@ func main() {
 	bot := telegram.NewBot()
 	telegram.StartUpdates(bot)
 }
-

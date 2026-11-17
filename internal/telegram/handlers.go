@@ -40,6 +40,7 @@ func handlerFreeRam(bot *tgbotapi.BotAPI, msg *tgbotapi.Message) tgbotapi.Messag
 
 	var totalKB, availableKB uint64
 	scanner := bufio.NewScanner(file)
+	
 
 	for scanner.Scan() {
 		fields := strings.Fields(scanner.Text())
@@ -62,6 +63,10 @@ func handlerFreeRam(bot *tgbotapi.BotAPI, msg *tgbotapi.Message) tgbotapi.Messag
 		if totalKB > 0 && availableKB > 0 {
 			break
 		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return tgbotapi.NewMessage(msg.Chat.ID, "ошибка чтения файла:"+err.Error())
 	}
 
 	usedMB := float64(totalKB-availableKB) / 1024
