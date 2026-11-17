@@ -8,6 +8,8 @@
 * `/freeram` — показывает сколько оперативки занято и сколько всего (в МБ).
 
 Быстрый старт:
-* `docker build -t clarity .`
-* `docker run --rm --env-file .env clarity`
+* `git clone https://github.com/white-umka/clarity`
+* `cd clarity`
+* `chmod +x start.sh`
+* `./start.sh`
 * не забудьте добавить ваше токен в .env перед запуском!

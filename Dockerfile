@@ -1,5 +1,6 @@
-FROM golang:1.26.7-alpine
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
 WORKDIR /app
-COPY . .
-RUN go build -o bot ./cmd/bot
+COPY bot .
+RUN chmod +x ./bot
 CMD ["./bot"]
