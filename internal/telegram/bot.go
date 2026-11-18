@@ -27,6 +27,11 @@ func StartUpdates(bot *tgbotapi.BotAPI) {
 
 	for update := range bot.GetUpdatesChan(u) {
 		if update.Message == nil { continue }
+
+		if update.Message.Photo != nil {
+			bot.Send(handleASCII(bot, update.Message))
+			continue
+		}
 		
 		switch update.Message.Text {
 			case "/start":
@@ -34,7 +39,7 @@ func StartUpdates(bot *tgbotapi.BotAPI) {
 			case "/uptime":
 				bot.Send(handleUptime(bot, update.Message))
 			case "/freeram":
-				bot.Send(handlerFreeRam(bot, update.Message))
+				bot.Send(handleFreeRam(bot, update.Message))
 		}
 	}
 }
