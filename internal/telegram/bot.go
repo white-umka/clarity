@@ -16,7 +16,7 @@ func NewBot() *tgbotapi.BotAPI {
 		log.Panic(err)
 	}
 
-	bot.Debug = false //можно менять в ходе отладки 
+	bot.Debug = true //можно менять в ходе отладки 
 
 	return bot
 }

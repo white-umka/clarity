@@ -7,6 +7,8 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
+
+	"golang.org/x/image/draw"
 )
 
 func Converter(img image.Image) [][]string {
