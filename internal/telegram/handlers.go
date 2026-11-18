@@ -98,10 +98,13 @@ func handleASCII(bot *tgbotapi.BotAPI, msg *tgbotapi.Message) tgbotapi.Chattable
 		return tgbotapi.NewMessage(msg.Chat.ID, "Ошибка при загрузке изображения.")
 	}
 
-	// 2. Переводим в матрицу символов
+	// 2. Уменьшаем разрешение до 120 символов по ширине
+	img = ascii.Resize(img, 120)
+
+	// 3. Переводим в матрицу символов
 	art := ascii.Converter(img)
 
-	// 3. Рисуем в PNG в памяти
+	// 4. Рисуем в PNG в памяти
 	pngFile, err := ascii.Render(art)
 	if err != nil {
 		return tgbotapi.NewMessage(msg.Chat.ID, "Ошибка при генерации картинки.")
@@ -110,3 +113,4 @@ func handleASCII(bot *tgbotapi.BotAPI, msg *tgbotapi.Message) tgbotapi.Chattable
 	// Возвращаем готовое фото для отправки через bot.Send()
 	return tgbotapi.NewPhoto(msg.Chat.ID, pngFile)
 }
+

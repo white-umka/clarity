@@ -59,6 +59,27 @@ func GetImage(FileURL string) (image.Image, error) {
 	return img, err
 }
 
+func Resize(img image.Image, targetWidth int) image.Image {
+	bounds := img.Bounds()
+	w := bounds.Dx()
+	h := bounds.Dy()
+
+	if w == 0 || h == 0 {
+		return img
+	}
+
+	// Сжимаем высоту с коэффициентом 0.55, чтобы компенсировать вытянутость шрифта
+	ratio := float64(h) / float64(w)
+	targetHeight := int(float64(targetWidth) * ratio * 0.55)
+	if targetHeight < 1 {
+		targetHeight = 1
+	}
+
+	dst := image.NewRGBA(image.Rect(0, 0, targetWidth, targetHeight))
+	draw.BiLinear.Scale(dst, dst.Bounds(), img, bounds, draw.Over, nil)
+	return dst
+}
+
 func GetCharForBrightness(brightness float64) string { // 1 - черный, 100 - белый
     switch {
     case brightness > 90:
